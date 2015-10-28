@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<include file="./Public/Header/header.html,./Public/Header/jquery.html,./Public/Header/mobile.html,./Public/Header/validate.html,./Public/Header/artDialog.html" />
+		<title>测试</title>
+	</head>
+<body>
+<div id="testpage" data-role="page" data-theme="c" data-position="fixed">
+<include file="Public/mobile_header" header="测试" />
+<div data-role="content">
+<button id="testbtn" data-theme="b">测试</button>
+</div>
+<script type="text/javascript">
+$('#testpage').bind('pageinit',function(event){
+	$('#testbtn').on('click',function(){
+		var elem = document.getElementById('loginpage');
+		top.dialog({
+			padding:5,
+			url: "{:U('Home/Scratch/login','','html',true)}",
+			onclose: function () {
+				if (this.returnValue) {
+					location.href = this.returnValue;
+				}
+			},
+			
+		}).showModal();
+	});
+});
+
+</script>
+</div>
+<div id="loginpage" data-role="page" data-theme="c"  data-position="fixed">
+	<include file="Public/mobile_header" header="登录"/>
+	<div data-role="content">
+		<form id="loginform" method="post" action="{:U('Home/Scratch/loginHandle')}">
+			<div data-role="fieldcontain">
+  			<label for="username">用户名:</label>
+  			<input type="text" name="username" id="username"  placeholder="请输入您的用户名">
+  			</div>
+  			<div data-role="fieldcontain">
+  			<label for=password>密码：</label>
+  			<input type="password" name="password" id="password"  placeholder="请输入您的密码">
+  			</div>
+  			<input type="submit" value="登陆" name="loginbtn" id="loginbtn" data-theme="e">
+		</form>
+		<a data-role="button" href="{:C('REGISTER_LINK')}" data-theme="b">注册</a>
+	</div>
+</div>
+</body>
+</html>

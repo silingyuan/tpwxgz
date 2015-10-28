@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<include file="./Public/Header/header.html,./Public/Header/jquery.html,./Public/Header/mobile.html,./Public/Header/validate.html,./Public/Header/artDialog.html" />
+		<link rel="stylesheet" href="__SCRATCH__/css/scratchStyle.css" />
+		<script type="text/javascript" src="__SCRATCH__/js/wScratchPad.js"></script>	
+		<title>抽奖页面</title>
+	</head>
+<body>
+<div id="scratchpage" data-role="page" data-theme="c">
+<include file="Public/mobile_header" header="抽奖页面"/>
+<div class="activity-scratch-card-winning">
+	<div class="scratch">
+		<img src="__SCRATCH__/images/activity-scratch-card-bannerbg.png">
+		<div id="prize" style="display:none">
+			{:$login?'请登录':$prize['name']}
+		</div>
+		<div id="scratchpad">
+		</div>
+	</div>
+<if condition="$prize.id lt 7">
+	<div id="zjl" style="display:none" class="boxcontent boxwhite">
+	<div class="box">
+		<div class="title-red">
+			<span>
+				恭喜您:
+			</span>
+		</div>
+		<div class="Detail">
+			<p>您获得了：<span class="red">{$prize['name']}（{$prize['content']}）</span></p>
+			<p>兑奖SN码：
+				<span class="red" id="sncode">
+					{:implode(str_split($prize['sncode'],5),"-")}
+				</span>
+			</p>
+			<p>兑奖流程：长摁复制上方<span class="red">兑奖SN码</span>，然点击下方进行兑奖</p>
+			<a data-role="button" data-theme="b" href="#transmit">陛下点这里兑奖</a>
+		</div>
+	</div>
+</div>
+
+<else />
+<div id="zjl" style="display:none" class="boxcontent boxwhite">
+<div class="box">
+	<div class="title-orange">
+		<span>
+			很抱歉：
+		</span>
+	</div>
+	<div class="Detail">
+		<p>你本次抽奖没有获得Q币，快快点击下方的<span class="red">再抽一次</span>来试试运气吧</p>
+ 		<a data-role="button" data-theme="b" data-rel="external" data-ajax="false" href="{:U('Home/Scratch/index','','',TRUE)}">再抽一次</a>
+			</div>
+		</div>
+	</div>
+</if>
+	<div class="boxcontent boxwhite">
+		<div class="box">
+			<div class="title-green">
+				<span>奖项设置：</span>
+			</div>
+			<div class="Detail">
+				<table>
+					<tr>
+						<th>奖项</th><th>奖励</th><th>总数</th>
+					</tr>
+					<foreach name="prize_arr" item="prizeArr">
+						<tr>
+							<td>{$prizeArr.name}</td><td>{$prizeArr.content}</td><td>{$prizeArr.v}</td>
+						</tr>
+					</foreach>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="boxcontent boxwhite">
+		<div class="box">
+			<div class="title-brown">
+				活动说明：
+			</div>
+			<div class="Detail">
+				<span style="color: red">
+					欢迎您！尊敬的{:session('?username')?'会员':'临时'}用户{:session('username')}！<br>
+					本次活动总共可以刮2次,您还有{$scratch['times']?$scratch['times']:'2'}次机会,如果没用完重新进入本页面可以再刮!祝您好运哦！
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div data-role="page" id="transmit">
+<img alt="" src="__SCRATCH__/images/zf2.png" style="width: 100%;height: 100%">
+</div>
+<script type="text/javascript">
+$('#scratchpage').bind('pageinit', function(event) {
+	var num = 0;
+	var goon = true;
+	$("#scratchpad").wScratchPad({
+		width: 150,
+		height: 40,
+		color: "#a9a9a7",
+		scratchMove: function() {
+			num++;
+			if("{$login}"){
+				if(num==3){
+				top.dialog({
+					padding:5,
+					url: "{:U('Home/Scratch/login','','html',true)}",
+					onclose: function () {
+						if (this.returnValue) {
+							location.href = this.returnValue;
+						}
+					},
+					
+				}).showModal();
+				}
+			}else if (num > 10 && goon) {						
+				goon = false;							
+				$("#zjl").slideToggle(500);
+			}
+		}
+	});
+	$("#prize").slideToggle(10);
+});
+
+$("#transmit").bind('pageinit',function(event){
+	setTimeout(function(){
+		location.href="{:U('Home/Scratch/getAward','','',TRUE)}";
+	},6125);
+});
+</script>
+</body>
+</html>

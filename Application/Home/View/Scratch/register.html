@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<include file="./Public/Header/header.html,./Public/Header/jquery.html,./Public/Header/mobile.html,./Public/Header/validate.html" />
+		<title>注册</title>
+	</head>
+<body>
+<div id="registerpage" data-role="page" data-theme="c">
+	<include file="Public/mobile_header" header="注册"/>
+	<div data-role="content">
+		<form id="registerform" method="post" action="{:U('Home/Scratch/registerHandle')}">
+			<div style="display: none;">
+				<input type="text" name="fromusername" id="fromusername" value="{$fromusername}" />
+			</div>
+			<div data-role="fieldcontain">
+  			<label for="username">用户名:</label>
+  			<input type="text" name="username" id="username"  placeholder="请输入您的用户名" />
+  			</div>
+  			<div data-role="fieldcontain">
+  			<label for=password>密码：</label>
+  			<input type="password" name="password" id="password"  placeholder="请输入您的密码" />
+  			</div>
+  			<div data-role="fieldcontain">
+  			<label for=passwordagain>确认密码：</label>
+  			<input type="password" name="passwordagain" id="passwordagain" placeholder="请再输入一次密码"/>
+  			</div>
+  			<input type="submit" value="注册" name="registerbtn" id="registerbtn" data-theme="e">
+		</form>
+	</div>
+</div>
+<script>
+$('#registerpage').bind('pageinit', function(event) {
+	var validator=$('#registerform').validate({
+		submitHandler:function(form) {
+			form.submit();
+		},
+		errorPlacement: function(error, element) {  
+		    error.appendTo(element.parent().parent());  
+		},
+		onfocusout: function(element) { $(element).valid();},
+		onkeyup: function(element) { $(element).valid(); },
+		rules: {
+			username: {
+				required: true,
+				remote:"{:U('Home/Scratch/registerHandle')}",
+				rangelength:[3,10],
+			},
+			password: {
+				required: true,
+				rangelength:[5,10],
+			},
+			passwordagain:{
+				required: true,
+				rangelength:[5,10],
+				equalTo:"#password"
+			}
+		},
+		messages:  {
+		username: {
+			required:"请输入您的用户名",
+			remote:"该用户名已经被注册",
+		},
+		password: {
+			required:"请输入您的密码"
+		},
+		passwordagain:{
+			required:"请您再输入一次密码"
+		}
+		}	
+	});
+	/*$("#registerbtn").on('tap',function(){ 
+		if(validator.form()==true)
+		{
+		    var formData = $("#registerform").serialize(); 
+		    $.post("{:U('Home/Scratch/registerHandle')}",formData,function(data){
+		    	if(data==1){
+		    		var content='恭喜您！注册成功！';
+		    	}
+		    	else{
+		    		var content='您已经注册过帐号，无需重复注册 </br>'
+		    		+"您的用户名为：{:session('username')}</br>"
+		    		+"您的密码为：{:session('password')}";
+		    	}
+		    	$('#rescontent').html(content);	
+		    	$.mobile.changePage($('#dialogpage'),"pop", false, false);
+		    });
+		}
+		else
+		{
+			alert("注册失败！请核对信息");
+		}
+	});*/
+});
+/*$("#dialogpage").bind('pageinit',function(event){
+	var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+	var interval = setInterval(function(){
+		var time = --wait.innerHTML;
+		if(time <= 0) {
+			location.href = href;
+			clearInterval(interval);
+		};
+	}, 1000);
+});*/
+
+</script>
+</body>
+</html>

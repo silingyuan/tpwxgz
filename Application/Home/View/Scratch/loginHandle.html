@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+<include file="./Public/Header/header.html,./Public/Header/jquery.html,./Public/Header/mobile.html" />
+		<title>提示信息</title>
+	</head>
+<body>
+<div id="loginpage" data-role="page" data-theme="c">
+	<include file="Public/mobile_header" header="提示框"/>
+	<div data-role="content">
+		<?php if(isset($message)) {?>
+		<div><?php echo($message['content']); ?></div>
+		<p>等待： <b id="wait"><?php echo($waitSecond); ?></b>S后，将自动跳转至<?php echo $message['next']?></p>
+		<a  data-role="button" id="href" data-theme="e">点击跳转到<?php echo $message['next']?></a>
+		<script type="text/javascript">
+		(function(){
+			if((dialog = top.dialog.get(window))){
+				dialog.width(320);
+				dialog.height(100);
+				dialog.reset();    // 重置对话框位置
+			}
+		var wait = document.getElementById('wait'),href ="{$jumpUrl}";
+		var interval = setInterval(function(){
+			var time = --wait.innerHTML;
+			if(time <= 0) {
+				dialog.close(href); // 关闭（隐藏）对话框
+				dialog.remove();	
+				clearInterval(interval);
+				return false;
+			};
+		}, 1000);
+		$("#href").bind('click',function(){
+			dialog.close(href); // 关闭（隐藏）对话框
+			dialog.remove();	
+			return false;
+		});
+		})();
+		</script>
+		<?php }else{?>
+		<div><?php echo($error['content']); ?></div>
+		<p>等待： <b id="wait"><?php echo($waitSecond); ?></b>S后，将自动跳转至<?php echo $error['back']?></p>
+		<a data-rel="external" data-role="button" id="href" href="<?php echo($jumpUrl); ?>" data-rel="external" data-ajax="false" data-theme="e">点击返回到<?php echo $error['back']?></a>
+		<script type="text/javascript">
+		(function(){
+			if((dialog = top.dialog.get(window))){
+				dialog.width(320);
+				dialog.height(100);
+				dialog.reset();    // 重置对话框位置
+			}
+		var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+		var interval = setInterval(function(){
+			var time = --wait.innerHTML;
+			if(time <= 0) {
+				location.href = href;
+				clearInterval(interval);
+			};
+		}, 1000);
+		})();
+		</script>
+		<?php }?>
+	<script type="text/javascript">
+$("#subscribebtn").bind('click',function(){		
+		dialog.close(document.getElementById('subscribebtn').href); // 关闭（隐藏）对话框
+		dialog.remove();	
+		return false;
+	});
+	</script>
+	<p style="color: red;">公告：为了杜绝恶意抽奖现象的发生和维护广大用户的合法权益，本次抽奖活动需要登录后才可参与！如果您尚未注册，请点击注册按钮即可成为我们的会员。</p>
+	</div>
+</div>
+</body>
+</html>

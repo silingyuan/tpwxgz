@@ -1,0 +1,94 @@
+@CHARSET "UTF-8";
+.activity-scratch-card-winning{
+	background-image: url(../images/activity-scratch-card-bg.jpg);
+	text-shadow:0px 0px;
+}
+.scratch{
+	width: 320px;
+	max-width: 480px;
+	margin: 0 auto;
+	position: relative;
+}
+.scratch img{
+	width: 320px;
+}
+#scratchpad,#prize{
+	position: absolute;
+	width: 150px;
+	height: 40px;
+	top: 140px;
+	left: 105px;
+	text-align: center;
+	font-size: 20px;
+	line-height: 40px;
+	color:#333;
+}
+.boxcontent {
+	margin:15px 15px 0;
+	border-radius: 5px;
+	padding: 2px;
+	background-color: #FEF8B2;
+}
+.boxyellow{
+	background-color: #FEF8B2;
+}
+.boxwhite{
+	background-color: #ffffff;
+}
+.box {
+	border-radius: 5px;
+	font-size:14px;
+	border: 1px dashed rgba(0, 0, 0, 0.3);
+}
+.box .title-red {
+	padding: 0 5px 0px 10px;
+	background:url(../images/title-bg-red.png) no-repeat 0 0;
+	border-radius: 3px 3px 3px 0;
+	color:#ffffff;
+	height:22px;
+	margin:-1px;
+}
+.box .title-orange {
+	padding: 0 5px 0px 10px;
+	background:url(../images/title-bg-orange.png) no-repeat 0 0;
+	border-radius: 3px 3px 3px 0;
+	color:#ffffff;
+	height:22px;
+	margin:-1px;
+}
+.box .title-green {
+	padding: 0 5px 0px 10px;
+	background:url(../images/title-bg-green.png) no-repeat 0 0;
+	border-radius: 3px 3px 3px 0;
+	color:#ffffff;
+	height:22px;
+	margin:-1px;
+}
+.box .title-brown {
+	padding: 0 5px 0px 10px;
+	background:url(../images/title-bg-brown.png) no-repeat 0 0;
+	border-radius: 3px 3px 3px 0;
+	color:#ffffff;
+	height:22px;
+	margin:-1px;
+}
+.box .Detail {
+	padding: 10px;
+	color:black;
+
+}
+.red {
+	color:red
+}
+.Detail table {
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.Detail table, td, th {
+    border: 1px solid black;
+    text-align: center;
+}
+.Detail td{
+	width: 85px;
+}
