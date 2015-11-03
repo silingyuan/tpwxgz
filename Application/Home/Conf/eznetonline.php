@@ -16,10 +16,10 @@ return array(
 		'DATA_CACHE_TIME'=>600,
 		'DATA_CACHE_TABLE'=>'sc_cache',
 	'DB_TYPE'=>'mysql',   //数据库类型
-	'DB_HOST'=>'120.55.116.234',    //服务器地址
-	'DB_NAME'=>'a1026112625',    //数据库名
-	'DB_USER'=>'a1026112625',       //数据库用户名
-	'DB_PWD'=>'19603802',            //数据库密码
+	'DB_HOST'=>'sql87.mysql.sitecname.com',    //服务器地址
+	'DB_NAME'=>'sq_silingyuan',    //数据库名
+	'DB_USER'=>'sq_silingyuan',       //数据库用户名
+	'DB_PWD'=>'18753231652',            //数据库密码
 	'DB_PORT'=>3306,     //数据库端口
 	'DB_PREFIX'=>'sc_',     //数据表前缀
 	'DB_CHARSET'=>'utf8',   //字符集

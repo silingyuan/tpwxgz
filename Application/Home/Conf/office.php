@@ -2,8 +2,8 @@
 return array(
 		//配置常用的CSS、JS、image资源的路径
 		'TMPL_PARSE_STRING'=>array(
-				'__SCRATCH__'=>'/sae/1/Application/Home/View/Scratch/public',
-				'__JQUERY__'=>'/sae/1/Public/Jquery',
+				'__SCRATCH__'=>'/tpwxgzh/Application/Home/View/Scratch/public',
+				'__JQUERY__'=>'/tpwxgzh/Public/Jquery',
 		),
 		//cache配置
 		'DATA_CACHE_TYPE'=>'Db',

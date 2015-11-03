@@ -18,10 +18,9 @@ if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 //define('APP_MODE','sae');
 //定义存储类型为SAE
 //define('STORAGE_TYPE','sae');
-//开启易网中国免费空间模式
-define('APP_STATUS','ywzg');
+
 //开启office状态配置
-//define('APP_STATUS','office');
+define('APP_STATUS','office');
 //开启home状态配置
 //define('APP_STATUS','home');
 
