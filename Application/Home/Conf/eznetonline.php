@@ -3,8 +3,8 @@ return array(
 	//'配置项'=>'配置值'
 	//配置常用的CSS、JS、image资源的路径
 	'TMPL_PARSE_STRING'=>array(
-		'__SCRATCH__'=>'/Application/Home/View/Scratch/public',
-		'__JQUERY__'=>'/Public/Jquery',
+		'__SCRATCH__'=>'/tpwxgzh/Application/Home/View/Scratch/public',
+		'__JQUERY__'=>'/tpwxgzh/Public/Jquery',
 	),
 		'TMPL_ACTION_SUCCESS' => 'Public:jump',
 		'TMPL_ACTION_ERROR' => 'Public:jump',

@@ -13,40 +13,36 @@ class ScratchController extends Controller{
 		else{//如果session中存储了用户名和密码，显示抽奖页面
 			$scratchDb=M('scratch');
 			$result=$scratchDb->where("username='%s'",session('username'))->find();
-			if(!$result){
-				$scratch=array('username'=>session('username'),
-									'times'=>2,
-									'time'=>time(),
-									);
-				$scratchDb->data($scratch)->add();
-			}else{
+			if(is_array($result)){
 				$scratch=$result;
-			}
-
-			$prize=getPrize($prize_arr);
-			
-			$refreshTime=mktime(0,0,0,date("m",$scratch['time']),date("d",$scratch['time'])+1,date("Y",$scratch['time']));
-			$scratch['time']=time();
-			if($scratch['time']>$refreshTime)
-			{
-				$scratch['times']=2;
-			}
-			if($scratch['times']>0)
-			{
-				$scratch['times']=$scratch['times']-1;
-				$scratchDb->save($scratch);					
-				$this->assign('scratch',$scratch);
-				$this->assign('prize',$prize);
-				$this->display('scratch');
-				$id=$prize['id'];
-				if ($id<7) {
-					$prize_arr[$id-1]['v']=$prize_arr[$id-1]['v']-1;
-					$prizeDb->save($prize_arr[$id-1]);
-					S($prize['sncode'],$prize['num']);
+				$prize=getPrize($prize_arr);					
+				$refreshTime=mktime(0,0,0,date("m",$scratch['time']),date("d",$scratch['time'])+1,date("Y",$scratch['time']));
+				$scratch['time']=time();
+				if($scratch['time']>$refreshTime)
+				{
+					$scratch['times']=2;
 				}
+				if($scratch['times']>0)
+				{
+					$scratch['times']=$scratch['times']-1;
+					$scratchDb->save($scratch);
+					$this->assign('scratch',$scratch);
+					$this->assign('prize',$prize);
+					$this->display('scratch');
+					$id=$prize['id'];
+					if ($id<7) {
+						$prize_arr[$id-1]['v']=$prize_arr[$id-1]['v']-1;
+						$prizeDb->save($prize_arr[$id-1]);
+						S($prize['sncode'],$prize['num']);
+					}
+				}
+				else {
+					$this->display('tomorrow');
+				}
+				
 			}
-			else {
-				$this->display('tomorrow');
+			else{
+				echo '很抱歉，网络有点累了！休息一下再重试吧。';
 			}
 		} 
 	}
@@ -76,7 +72,7 @@ class ScratchController extends Controller{
 		if(IS_POST)
 		{
 			$result=M('user')->where("username='%s' AND password='%s'",$_POST['username'],$_POST['password'])->find();
-			if($result){
+			if(is_array($result)){
 				session('username',$_POST['username']);
 				session('password',$_POST['password']);
 				$message=array(
@@ -86,8 +82,9 @@ class ScratchController extends Controller{
 				$this->assign('message',$message);
 				$this->assign('waitSecond',3);
 				$this->assign('jumpUrl',U('Home/Scratch/index'));
+				$this->display('loginHandle');
 			}
-			else{
+			else if(is_null($result)){
 				$error=array(
 						'content'=>'<p>很抱歉，您的用户名或密码错误！请核对后重新登录！</p>',
 						'back'=>'登录页面'
@@ -95,37 +92,62 @@ class ScratchController extends Controller{
 				$this->assign('error',$error);
 				$this->assign('waitSecond',3);
 				$this->assign('jumpUrl',U('Home/Scratch/login'));
+				$this->display('loginHandle');
 			}
-			$this->display('loginHandle');
+			else {
+				echo '很抱歉，网络有点累了！休息一下再重试吧。';
+			}
 		}
 	}
 	public function register(){
-		$formusername=$_GET['fromusername']?$_GET['fromusername']:'test';
-		$userDb=M('user');
-		$result=$userDb->where("fromusername='%s'",$formusername)->find();
-		if($result['username'])
-		{
-			session('username',$result['username']);
-			session('password',$result['password']);
-			$res=array(
-				'content'=>"<p>恭喜您！您已经是我们的会员了，无需重复注册。 </p><p>您的用户名为：".$result['username']."</br>您的密码为：".$result['password']."</p>",
-				'next'=>'抽奖页面',
-			);
-			$this->success($res,U('Home/Scratch/index'),3);
+		//本地模式调试使用test作为$formusername
+		if(APP_STATUS=='eznetonline'){
+			$fromusername=$_GET['fromusername'];
 		}
-		else
-		{
-			$this->assign('fromusername',$formusername);
-			$this->display();
+		else {
+			$fromusername='test';
+		}
+		if(is_null($fromusername)){
+			echo '请用微信登录';
+		}
+		else{
+			$userDb=M('user');
+			$result=$userDb->where("fromusername='%s'",$fromusername)->find();
+			if(is_array($result)) {
+				session('username',$result['username']);
+				session('password',$result['password']);
+				$res=array(
+						'content'=>"<p>恭喜您！您已经是我们的会员了，无需重复注册。 </p><p>您的用户名为：".$result['username']."</br>您的密码为：".$result['password']."</p>",
+						'next'=>'抽奖页面',
+				);
+				$this->success($res,U('Home/Scratch/index'),3);
+			}
+			else if(is_null($result)) {
+				$this->assign('fromusername',$fromusername);
+				$this->display();
+			}
+			else {
+				echo '很抱歉，网络有点累了！休息一下再重试吧。';
+			}
 		}
 	}
 	
 	public function registerHandle(){
-		if(IS_POST)
-		{
-			$user=$_POST;
-			$user['time']=time();
+		if(IS_POST){
+			$user=array(
+				'fromusername'=>$_POST['fromusername'],
+				'username'=>$_POST['username'],
+				'password'=>$_POST['password'],
+				'time'=>time()
+			);
 			M('user')->data($user)->add();
+			
+			$scratch=array('username'=>$_POST['username'],
+					'times'=>2,
+					'time'=>time(),
+			);
+			M('scratch')->data($scratch)->add();
+			
 			session('username',$user['username']);
 			session('password',$user['password']);
 			$res=array(
@@ -152,18 +174,22 @@ class ScratchController extends Controller{
 		{
 			$sncode=preg_replace('/-/','',$_POST['sncode']);
 			$sncode=preg_replace('/\s+/','',$sncode);
+			$qb=S($sncode);
+			S($sncode,NULL);
 			$awardDb=M('award');
-			$result=$awardDb->where("qq=%s",$_POST['qq'])->find();
-			if(!$result){
-				$data=array('qq'=>$_POST['qq'],'qb'=>S($sncode));
-				$awardDb->data($data)->add();
-			}
-			else {
+			$result=$awardDb->where("qq='%s'",$_POST['qq'])->find();
+			if(is_array($result)){
 				$data=$result;
-				$data['qb']=$data['qb']+S($sncode);
+				$data['qb']=$data['qb']+$qb;
 				$awardDb->save($data);
 			}
-			S($sncode,NULL);
+			else if(is_null($result)){
+				$data=array('qq'=>$_POST['qq'],'qb'=>$qb);
+				$awardDb->data($data)->add();
+			}
+			else{
+				echo '很抱歉，网络有点累了！休息一下再重试吧。';
+			}
 			$res=array(
 					'content'=>"<p>恭喜您！您已经兑换成功！QQ号".$data['qq']."已经获得的Q币总数为".$data['qb']."欢迎您继续抽奖</p>",
 					'next'=>'抽奖页面',
@@ -173,12 +199,12 @@ class ScratchController extends Controller{
 		if(IS_GET){
 			$sncode=preg_replace('/-/','',I('sncode'));
 			$sncode=preg_replace('/\s+/','',$sncode);
-			if(S($sncode))
+			if(S($sncode)==false)
 			{
-				$this->ajaxReturn(true);
+				$this->ajaxReturn(false);
 			}
 			else {
-				$this->ajaxReturn(false);
+				$this->ajaxReturn(true);
 			}
 		}
 	}

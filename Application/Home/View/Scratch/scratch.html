@@ -81,7 +81,7 @@
 			<div class="Detail">
 				<span style="color: red">
 					欢迎您！尊敬的{:session('?username')?'会员':'临时'}用户{:session('username')}！<br>
-					本次活动总共可以刮2次,您还有{$scratch['times']?$scratch['times']:'2'}次机会,如果没用完重新进入本页面可以再刮!祝您好运哦！
+					本次活动总共可以刮2次,您还有{:session('?username')?$scratch['times']:'2'}次机会,如果没用完重新进入本页面可以再刮!祝您好运哦！
 				</span>
 			</div>
 		</div>
