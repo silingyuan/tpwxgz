@@ -105,7 +105,7 @@ class ScratchController extends Controller{
 			$fromusername=$_GET['fromusername'];
 		}
 		else {
-			$fromusername='test';
+			$fromusername='test3';
 		}
 		if(is_null($fromusername)){
 			echo '请用微信登录';
@@ -134,27 +134,42 @@ class ScratchController extends Controller{
 	
 	public function registerHandle(){
 		if(IS_POST){
-			$user=array(
-				'fromusername'=>$_POST['fromusername'],
-				'username'=>$_POST['username'],
-				'password'=>$_POST['password'],
-				'time'=>time()
-			);
-			M('user')->data($user)->add();
-			
-			$scratch=array('username'=>$_POST['username'],
-					'times'=>2,
-					'time'=>time(),
-			);
-			M('scratch')->data($scratch)->add();
-			
-			session('username',$user['username']);
-			session('password',$user['password']);
-			$res=array(
-					'content'=>"<p>恭喜您！您已经注册成功！</p>",
-					'next'=>'抽奖页面',
-			);
-			$this->success($res,U('Home/Scratch/index'),3);
+			$userDb=M('user');
+			$result=$userDb->where("fromusername='%s'",$_POST['fromusername'])->find();
+			if(is_array($result)) {
+				session('username',$result['username']);
+				session('password',$result['password']);
+				$res=array(
+						'content'=>"<p>恭喜您！您已经是我们的会员了，无需重复注册。 </p><p>您的用户名为：".$result['username']."</br>您的密码为：".$result['password']."</p>",
+						'next'=>'抽奖页面',
+				);
+				$this->success($res,U('Home/Scratch/index'),3);
+			}
+			else if(is_null($result)) {
+				$user=array(
+					'fromusername'=>$_POST['fromusername'],
+					'username'=>$_POST['username'],
+					'password'=>$_POST['password'],
+					'time'=>time()
+				);
+				$userNum=$userDb->data($user)->add();			
+				$scratch=array('username'=>$_POST['username'],
+						'times'=>2,
+						'time'=>time(),
+				);
+				M('scratch')->data($scratch)->add();
+				
+				session('username',$user['username']);
+				session('password',$user['password']);
+				$res=array(
+						'content'=>"<p>恭喜您！您已经注册成功！欢迎您加入我们，您是我们的第".$userNum."位会员。</p>",
+						'next'=>'抽奖页面',
+				);
+				$this->success($res,U('Home/Scratch/index'),3);
+			}
+			else {
+				echo '很抱歉，网络有点累了！休息一下再重试吧。';
+			}
 		}
 		if(IS_GET){
 			$result=M('user')->where("username='%s'",I('username'))->find();
