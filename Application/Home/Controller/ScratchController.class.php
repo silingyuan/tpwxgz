@@ -1,7 +1,50 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+/**
+ * 函数功能说明
+ * @param name string|array  需要验证的规则列表,支持逗号分隔的权限规则或索引数组
+ * @param uid  int           认证用户的id
+ * @param string mode        执行check的模式
+ * @param relation string    如果为 'or' 表示满足任一条规则即通过验证;如果为 'and'则表示需满足所有规则才能通过验证
+ * @return boolean           通过验证返回true;失败返回false
+ */
 class ScratchController extends Controller{
+	/**
+	 * 控制器初始化方法，判断微信公众号的类型，并进行相应的参数配置
+	 * @param        无
+	 * @return       无
+	 */
+	public function _initialize(){
+		switch ($_GET['wxh']){
+			case 'zqb':
+				$config=array(
+						'DB_PREFIX'=>'sc_',
+						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+				);
+				C($config);
+			break;
+			case 'shenshi':
+				$config=array(
+						'DB_PREFIX'=>'sheshi_',
+						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+				);
+				C($config);
+			break;
+			case 'qcxmm':
+				$config=array(
+						'DB_PREFIX'=>'qcxmm_',
+						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+				);
+				C($config);
+			break;
+			default:
+			break;
+		}
+	}
 	public function index(){
 		$prizeDb=M('prize');
 		$prize_arr=$prizeDb->where('id>0')->select();
@@ -255,6 +298,9 @@ class ScratchController extends Controller{
 		echo $formusername."抽奖次数2000";
 	}
 	public function test(){
-		$this->display();
+		echo '<a href="'.U('Home/Scratch/test1',array('wxh'=>'shenshi'),'',TRUE).'">test</a>';
+	}
+	public function test1(){
+		echo C('DB_PREFIX');
 	}
 }
