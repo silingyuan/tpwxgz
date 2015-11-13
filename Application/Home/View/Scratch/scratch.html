@@ -49,7 +49,7 @@
 	</div>
 	<div class="Detail">
 		<p>你本次抽奖没有获得Q币，快快点击下方的<span class="red">再抽一次</span>来试试运气吧</p>
- 		<a data-role="button" data-theme="b" data-rel="external" data-ajax="false" href="{:U('Home/Scratch/index','','',TRUE)}">再抽一次</a>
+ 		<a data-role="button" data-theme="b" data-rel="external" data-ajax="false" href="{:U('Home/Scratch/index',array('wxid'=>$_GET['wxid']),'',TRUE)}">再抽一次</a>
 			</div>
 		</div>
 	</div>
@@ -105,7 +105,7 @@ $('#scratchpage').bind('pageinit', function(event) {
 				if(num==3){
 				top.dialog({
 					padding:5,
-					url: "{:U('Home/Scratch/login','','html',true)}",
+					url: "{:U('Home/Scratch/login',array('wxid'=>$_GET['wxid']),'html',true)}",
 					onclose: function () {
 						if (this.returnValue) {
 							location.href = this.returnValue;
@@ -125,7 +125,7 @@ $('#scratchpage').bind('pageinit', function(event) {
 
 $("#transmit").bind('pageinit',function(event){
 	setTimeout(function(){
-		location.href="{:U('Home/Scratch/getAward','','',TRUE)}";
+		location.href="{:U('Home/Scratch/getAward',array('wxid'=>$_GET['wxid']),'',TRUE)}";
 	},6125);
 });
 </script>

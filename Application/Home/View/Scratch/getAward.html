@@ -9,7 +9,7 @@
 <div id="awardpage" data-role="page" data-theme="c">
 	<include file="Public/mobile_header" header="兑奖页面"/>
 	<div data-role="content">
-		<form id="awardform" method="post" action="{:U('Home/Scratch/awardHandle')}">
+		<form id="awardform" method="post" action="{:U('Home/Scratch/awardHandle',array('wxid'=>$_GET['wxid']))}">
 			<div data-role="fieldcontain">
   			<label for="sncode">兑奖sncode:</label>
   			<input type="text" name="sncode" id="sncode"  placeholder="请输入您的兑奖sncode">
@@ -27,7 +27,7 @@
 			</div>
 			<div class="Detail">
 				尊敬的广大用户们大家好！针对本公众号出现的出现的兑换Q币失败的问题，向大家说一声抱歉！针对此问题我们的团队正在积极的修复中。
-				在此期间有兑换Q币失败的情况，请联系我们的<span style="color: red">美女客服（QQ号573395185     微信号silingyuan0 ）</span>，她会收集大家的情况！请大家耐心等待Q币到账。	
+				在此期间有兑换Q币失败的情况，请联系我们的<span style="color: red">美女客服（QQ 573395185）</span>，她会收集大家的情况！请大家耐心等待Q币到账。	
 			</div>
 		</div>
 	</div>
@@ -46,7 +46,7 @@ $('#awardpage').bind('pageinit', function(event) {
 		rules: {
 			sncode: {
 				required: true,
-				remote:"{:U('Home/Scratch/awardHandle')}",
+				remote:"{:U('Home/Scratch/awardHandle',array('wxid'=>$_GET['wxid']))}",
 			},
 			qq: {
 				required: true

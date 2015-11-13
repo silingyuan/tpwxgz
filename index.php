@@ -20,10 +20,10 @@ if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 //define('STORAGE_TYPE','sae');
 
 //开启office状态配置
-define('APP_STATUS','office');
+//define('APP_STATUS','office');
 //define('BIND_MODULE','Wish');
 //开启home状态配置
-//define('APP_STATUS','home');
+define('APP_STATUS','home');
 
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
 define('APP_DEBUG',True);

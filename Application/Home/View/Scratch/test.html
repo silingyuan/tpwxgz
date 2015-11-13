@@ -16,7 +16,7 @@ $('#testpage').bind('pageinit',function(event){
 		var elem = document.getElementById('loginpage');
 		top.dialog({
 			padding:5,
-			url: "{:U('Home/Scratch/login','','html',true)}",
+			url: "{:U('Home/Scratch/login',array('wxid'=>$_GET['wxid']),'html',true)}",
 			onclose: function () {
 				if (this.returnValue) {
 					location.href = this.returnValue;
@@ -32,7 +32,7 @@ $('#testpage').bind('pageinit',function(event){
 <div id="loginpage" data-role="page" data-theme="c"  data-position="fixed">
 	<include file="Public/mobile_header" header="登录"/>
 	<div data-role="content">
-		<form id="loginform" method="post" action="{:U('Home/Scratch/loginHandle')}">
+		<form id="loginform" method="post" action="{:U('Home/Scratch/loginHandle',array('wxid'=>$_GET['wxid']))}">
 			<div data-role="fieldcontain">
   			<label for="username">用户名:</label>
   			<input type="text" name="username" id="username"  placeholder="请输入您的用户名">

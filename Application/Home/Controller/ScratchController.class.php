@@ -16,28 +16,28 @@ class ScratchController extends Controller{
 	 * @return       无
 	 */
 	public function _initialize(){
-		switch ($_GET['wxh']){
+		switch ($_GET['wxid']){
 			case 'zqb':
 				$config=array(
 						'DB_PREFIX'=>'sc_',
-						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
-						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzAxMTI0MjgyMg==&mid=400471844&idx=1&sn=04f56640955b020fc44fed55015786ef#rd',
+						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzAxMTI0MjgyMg==&mid=400471321&idx=1&sn=f5dfb2b1eb985f5f5bbfa697bb68135e#rd',
 				);
 				C($config);
 			break;
 			case 'shenshi':
 				$config=array(
-						'DB_PREFIX'=>'sheshi_',
-						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
-						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+						'DB_PREFIX'=>'shenshi_',
+						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA3MjIzNTc2Mg==&mid=400304660&idx=1&sn=34da287cc2e637cd680322be3acb6103#rd',
+						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA3MjIzNTc2Mg==&mid=400304313&idx=1&sn=66de2c2e308a3065efac5c87c3393121#rd',
 				);
 				C($config);
 			break;
 			case 'qcxmm':
 				$config=array(
 						'DB_PREFIX'=>'qcxmm_',
-						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
-						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=261405797&idx=1&sn=e864099bd06482e8e44a80d0f7e20428#rd',
+						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=404021443&idx=1&sn=c03f2f259c5a1de1eed7a142b9c12934#rd',
+						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=404020056&idx=1&sn=d39a16ac02bcb6361987408a934622b9#rd',
 				);
 				C($config);
 			break;
@@ -46,7 +46,7 @@ class ScratchController extends Controller{
 		}
 	}
 	public function index(){
-		$prizeDb=M('prize');
+		$prizeDb=M('prize','sc_');
 		$prize_arr=$prizeDb->where('id>0')->select();
 		$this->assign('prize_arr',$prize_arr);
 		if(session('?username')==false||session('?password')==false){ //判断session是否存在用户名和密码
@@ -124,7 +124,7 @@ class ScratchController extends Controller{
 				);
 				$this->assign('message',$message);
 				$this->assign('waitSecond',3);
-				$this->assign('jumpUrl',U('Home/Scratch/index'));
+				$this->assign('jumpUrl',U('Home/Scratch/index',array('wxid'=>$_GET['wxid'])));
 				$this->display('loginHandle');
 			}
 			else if(is_null($result)){
@@ -134,7 +134,7 @@ class ScratchController extends Controller{
 				);
 				$this->assign('error',$error);
 				$this->assign('waitSecond',3);
-				$this->assign('jumpUrl',U('Home/Scratch/login'));
+				$this->assign('jumpUrl',U('Home/Scratch/login',array('wxid'=>$_GET['wxid'])));
 				$this->display('loginHandle');
 			}
 			else {
@@ -148,7 +148,7 @@ class ScratchController extends Controller{
 			$fromusername=$_GET['fromusername'];
 		}
 		else {
-			$fromusername='test3';
+			$fromusername=$_GET['fromusername']?$_GET['fromusername']:'test';
 		}
 		if(is_null($fromusername)){
 			echo '请用微信登录';
@@ -163,7 +163,7 @@ class ScratchController extends Controller{
 						'content'=>"<p>恭喜您！您已经是我们的会员了，无需重复注册。 </p><p>您的用户名为：".$result['username']."</br>您的密码为：".$result['password']."</p>",
 						'next'=>'抽奖页面',
 				);
-				$this->success($res,U('Home/Scratch/index'),3);
+				$this->success($res,U('Home/Scratch/index',array('wxid'=>$_GET['wxid'])),3);
 			}
 			else if(is_null($result)) {
 				$this->assign('fromusername',$fromusername);
@@ -186,7 +186,7 @@ class ScratchController extends Controller{
 						'content'=>"<p>恭喜您！您已经是我们的会员了，无需重复注册。 </p><p>您的用户名为：".$result['username']."</br>您的密码为：".$result['password']."</p>",
 						'next'=>'抽奖页面',
 				);
-				$this->success($res,U('Home/Scratch/index'),3);
+				$this->success($res,U('Home/Scratch/index',array('wxid'=>$_GET['wxid'])),3);
 			}
 			else if(is_null($result)) {
 				$user=array(
@@ -208,7 +208,7 @@ class ScratchController extends Controller{
 						'content'=>"<p>恭喜您！您已经注册成功！欢迎您加入我们，您是我们的第".$userNum."位会员。</p>",
 						'next'=>'抽奖页面',
 				);
-				$this->success($res,U('Home/Scratch/index'),3);
+				$this->success($res,U('Home/Scratch/index',array('wxid'=>$_GET['wxid'])),3);
 			}
 			else {
 				echo '很抱歉，网络有点累了！休息一下再重试吧。';
@@ -252,7 +252,7 @@ class ScratchController extends Controller{
 					'content'=>"<p>恭喜您！您已经兑换成功！QQ号".$data['qq']."已经获得的Q币总数为".$data['qb']."欢迎您继续抽奖</p>",
 					'next'=>'抽奖页面',
 			);
-			$this->success($res,U('Home/Scratch/index'),3);
+			$this->success($res,U('Home/Scratch/index',array('wxid'=>$_GET['wxid'])),3);
 		}
 		if(IS_GET){
 			$sncode=preg_replace('/-/','',I('sncode'));
@@ -298,7 +298,7 @@ class ScratchController extends Controller{
 		echo $formusername."抽奖次数2000";
 	}
 	public function test(){
-		echo '<a href="'.U('Home/Scratch/test1',array('wxh'=>'shenshi'),'',TRUE).'">test</a>';
+		echo '<a href="'.U('Home/Scratch/register',array('wxid'=>'qcxmm','$fromusername'=>'test32'),'',TRUE).'">register</a>';
 	}
 	public function test1(){
 		echo C('DB_PREFIX');

@@ -1,6 +1,6 @@
 <?php
 namespace WeiXin\Controller;
-class IndexController extends Wechat{
+class ShenshiController extends Wechat{
 	function index() {
 		$this->run('wxl',true);
 	}
@@ -37,19 +37,19 @@ class IndexController extends Wechat{
 		switch ($keyword) {
 			case "1";
 			$items= array(
-					new NewsResponseItem("机不可失！免费送Q币啦！进来看看没啥损失！","","http://wxllearn-wxl.stor.sinaapp.com/ggk/ggk.jpg",U('Home/Scratch/index',array('wxh'=>'shenshi'),'',TRUE))
+					new NewsResponseItem("机不可失！免费送Q币啦！进来看看没啥损失！","","http://wxllearn-wxl.stor.sinaapp.com/ggk/ggk.jpg",U('Home/Scratch/index',array('wxid'=>'shenshi'),'',TRUE))
 			);
 			$this->responseNews($items);
 			return;
 			break;
 			case "3":
-				$content='<a href="'.U('Home/Scratch/register',array('wxh'=>'shenshi','fromusername'=>$fromusername),'',TRUE).'">点击我注册成为会员</a>';
+				$content='<a href="'.U('Home/Scratch/register',array('wxid'=>'shenshi','fromusername'=>$fromusername),'',TRUE).'">点击我注册成为会员</a>';
 			break;
 			case "4":
-				$content='<a href="'.U('Home/Scratch/test',array('wxh'=>'shenshi'),'',TRUE).'">test</a>';
+				$content='<a href="'.U('Home/Scratch/test',array('wxid'=>'shenshi'),'',TRUE).'">test</a>';
 				break;
 			case "2000":
-				$content='<a href="'.U('Home/Scratch/set',array('wxh'=>'shenshi','fromusername'=>$fromusername),'',TRUE).'">scratch-set</a>';
+				$content='<a href="'.U('Home/Scratch/set',array('wxid'=>'shenshi','fromusername'=>$fromusername),'',TRUE).'">scratch-set</a>';
 			break;
 			default :
 				$content = "《主菜单》\n输入数字进入对应的功能\n1 刮刮卡抽奖\n3 注册成为会员";
