@@ -8,7 +8,7 @@
 <div id="registerpage" data-role="page" data-theme="c">
 	<include file="Public/mobile_header" header="注册"/>
 	<div data-role="content">
-		<form id="registerform" method="post" action="{:U('Home/Scratch/registerHandle')}">
+		<form id="registerform" method="post" action="{:U('Home/Scratch/registerHandle',array('wxid'=>$_GET['wxid']))}">
 			<div style="display: none;">
 				<input type="text" name="fromusername" id="fromusername" value="{$fromusername}" />
 			</div>
@@ -42,7 +42,7 @@ $('#registerpage').bind('pageinit', function(event) {
 		rules: {
 			username: {
 				required: true,
-				remote:"{:U('Home/Scratch/registerHandle')}",
+				remote:"{:U('Home/Scratch/registerHandle',array('wxid'=>$_GET['wxid']))}",
 				rangelength:[3,10],
 			},
 			password: {
