@@ -19,7 +19,8 @@ class ScratchController extends Controller{
 		switch ($_GET['wxid']){
 			case 'zqb':
 				$config=array(
-						'DB_PREFIX'=>'sc_',
+						'DB_PREFIX'=>'zqb_',
+						'SESSION_PREFIX'=>'zqb_',
 						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzAxMTI0MjgyMg==&mid=400471844&idx=1&sn=04f56640955b020fc44fed55015786ef#rd',
 						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzAxMTI0MjgyMg==&mid=400471321&idx=1&sn=f5dfb2b1eb985f5f5bbfa697bb68135e#rd',
 				);
@@ -28,6 +29,7 @@ class ScratchController extends Controller{
 			case 'shenshi':
 				$config=array(
 						'DB_PREFIX'=>'shenshi_',
+						'SESSION_PREFIX'=>'shenshi_',
 						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA3MjIzNTc2Mg==&mid=400304660&idx=1&sn=34da287cc2e637cd680322be3acb6103#rd',
 						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA3MjIzNTc2Mg==&mid=400304313&idx=1&sn=66de2c2e308a3065efac5c87c3393121#rd',
 				);
@@ -36,6 +38,7 @@ class ScratchController extends Controller{
 			case 'qcxmm':
 				$config=array(
 						'DB_PREFIX'=>'qcxmm_',
+						'SESSION_PREFIX'=>'qcxmm_',
 						'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=404021443&idx=1&sn=c03f2f259c5a1de1eed7a142b9c12934#rd',
 						'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzA4NzE5MTA1Mg==&mid=404020056&idx=1&sn=d39a16ac02bcb6361987408a934622b9#rd',
 				);
@@ -44,6 +47,7 @@ class ScratchController extends Controller{
 			default:
 			break;
 		}
+		//session('[start]');
 	}
 	public function index(){
 		$prizeDb=M('prize','sc_');
@@ -298,7 +302,10 @@ class ScratchController extends Controller{
 		echo $formusername."抽奖次数2000";
 	}
 	public function test(){
-		echo '<a href="'.U('Home/Scratch/register',array('wxid'=>'qcxmm','$fromusername'=>'test32'),'',TRUE).'">register</a>';
+		echo '<a href="'.U('Home/Scratch/register',array('wxid'=>'zqb','$fromusername'=>'test16'),'',TRUE).'">registerzqb</a>'.'<br>';
+		echo '<a href="'.U('Home/Scratch/register',array('wxid'=>'qcxmm','$fromusername'=>'test16'),'',TRUE).'">registerqcxmm</a>'.'<br>';
+		echo '<a href="'.U('Home/Scratch/index',array('wxid'=>'zqb'),'',TRUE).'">zqb</a>'.'<br>';
+		echo '<a href="'.U('Home/Scratch/index',array('wxid'=>'qcxmm'),'',TRUE).'">qcxmm</a>';
 	}
 	public function test1(){
 		echo C('DB_PREFIX');

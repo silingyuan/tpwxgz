@@ -5,6 +5,7 @@ return array(
 				'__SCRATCH__'=>'/tpwxgzh/Application/Home/View/Scratch/public',
 				'__JQUERY__'=>'/tpwxgzh/Public/Jquery',
 		),
+		//'SESSION_AUTO_START'=>false,
 		//cache配置
 		'DATA_CACHE_TYPE'=>'Db',
 		'DATA_CACHE_TIME'=>600,
