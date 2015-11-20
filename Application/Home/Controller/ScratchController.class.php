@@ -17,6 +17,15 @@ class ScratchController extends Controller{
 	 */
 	public function _initialize(){
 		switch ($_GET['wxid']){
+			case 'xl';
+			$config=array(
+					'DB_PREFIX'=>'sc_',
+					'SESSION_PREFIX'=>'sc_',
+					'SUBSCRIBE_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzAxMTI0MjgyMg==&mid=400471844&idx=1&sn=04f56640955b020fc44fed55015786ef#rd',
+					'REGISTER_LINK'=>'http://mp.weixin.qq.com/s?__biz=MzAxMTI0MjgyMg==&mid=400471321&idx=1&sn=f5dfb2b1eb985f5f5bbfa697bb68135e#rd',
+			);
+			C($config);
+			break;
 			case 'zqb':
 				$config=array(
 						'DB_PREFIX'=>'zqb_',

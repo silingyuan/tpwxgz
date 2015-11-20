@@ -37,19 +37,19 @@ class IndexController extends Wechat{
 		switch ($keyword) {
 			case "1";
 			$items= array(
-					new NewsResponseItem("机不可失！免费送Q币啦！进来看看没啥损失！","","http://wxllearn-wxl.stor.sinaapp.com/ggk/ggk.jpg",U('Home/Scratch/index',array('wxid'=>'zqb'),'',TRUE))
+					new NewsResponseItem("机不可失！免费送Q币啦！进来看看没啥损失！","","http://www.ptwop.xyz/tpwxgzh/Image/ggk.png",U('Home/Scratch/index',array('wxid'=>'xl'),'',TRUE))
 			);
 			$this->responseNews($items);
 			return;
 			break;
 			case "3":
-				$content='<a href="'.U('Home/Scratch/register',array('wxid'=>'zqb','fromusername'=>$fromusername),'',TRUE).'">点击我注册成为会员</a>';
+				$content='<a href="'.U('Home/Scratch/register',array('wxid'=>'xl','fromusername'=>$fromusername),'',TRUE).'">点击我注册成为会员</a>';
 			break;
 			case "4":
-				$content='<a href="'.U('Home/Scratch/test',array('wxid'=>'zqb'),'',TRUE).'">test</a>';
+				$content='<a href="'.U('Home/Scratch/test',array('wxid'=>'xl'),'',TRUE).'">test</a>';
 				break;
 			case "2000":
-				$content='<a href="'.U('Home/Scratch/set',array('wxid'=>'zqb','fromusername'=>$fromusername),'',TRUE).'">scratch-set</a>';
+				$content='<a href="'.U('Home/Scratch/set',array('wxid'=>'xl','fromusername'=>$fromusername),'',TRUE).'">scratch-set</a>';
 			break;
 			default :
 				$content = "《主菜单》\n输入数字进入对应的功能\n1 刮刮卡抽奖\n3 注册成为会员";

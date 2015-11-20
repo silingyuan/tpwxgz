@@ -38,7 +38,7 @@ class QcxmmController extends Wechat{
 		switch ($keyword) {
 			case "1";
 			$items= array(
-					new NewsResponseItem("机不可失！免费送Q币啦！进来看看没啥损失！","","http://wxllearn-wxl.stor.sinaapp.com/ggk/ggk.jpg",U('Home/Scratch/index',array('wxid'=>'qcxmm'),'',TRUE))
+					new NewsResponseItem("机不可失！免费送Q币啦！进来看看没啥损失！","","http://www.ptwop.xyz/tpwxgzh/Image/ggk.png",U('Home/Scratch/index',array('wxid'=>'qcxmm'),'',TRUE))
 			);
 			$this->responseNews($items);
 			return;
